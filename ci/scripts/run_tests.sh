@@ -3,4 +3,4 @@
 set -e -u -x
 
 mv npm-repo-cache/node_modules hello_hapi
-cd repo && npm test
+cd hello_hapi && npm test

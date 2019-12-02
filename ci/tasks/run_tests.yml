@@ -8,8 +8,8 @@ image_resource:
     tag: latest
 
 inputs:
-  - name: hello_hapi
-  - name: dependency-cache
+  - name: hapi
+  - name: npm-repo-cache
 
 run:
-  path: hello_hapi/ci/scripts/run_tests.sh
+  path: hapi/ci/scripts/run_tests.sh
