@@ -1,5 +1,5 @@
 'use strict';
-const Hapi = require('@hapi/hapi');
+const Hapi = require('hapi');
 const Server = new Hapi.Server();
 const Hello = require('./lib/hello');
 
