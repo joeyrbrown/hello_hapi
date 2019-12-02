@@ -30,14 +30,14 @@ jobs:
 
       - get: npm-repo-cache
 
-  - name: Tests
+  - name: Run tests
     plan:
-      - get: repo
+      - get: hapi
         trigger: true
         passed: [cache]
 
       - get: npm-repo-cache
         passed: [cache]
 
-      - task: Test Suite
+      - task: Run test suite
         file: hapi/ci/tasks/run_tests.yml
