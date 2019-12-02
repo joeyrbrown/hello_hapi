@@ -5,7 +5,6 @@ resource_types:
     source:
       respository: ymedlop/npm-cache-resource
       tag: latest
-
 resources:
   - name: hello_hapi
     type: git
