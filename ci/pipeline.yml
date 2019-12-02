@@ -40,4 +40,4 @@ jobs:
         passed: [cache]
 
       - task: Test Suite
-        file: hello_hapi/ci/tasks/run_tests.yml
+        file: repo/ci/tasks/run_tests.yml
