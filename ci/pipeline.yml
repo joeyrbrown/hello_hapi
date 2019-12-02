@@ -2,9 +2,14 @@
 resource_types:
   - name: npm-cache
     type: docker-image
+<<<<<<< HEAD
     source:
       respository: ymedlop/npm-cache-resource
       tag: latest
+=======
+    source: {respository: ymedlop/npm-cache-resource, tag: latest}
+
+>>>>>>> pipeline
 resources:
   - name: hello_hapi
     type: git
@@ -17,6 +22,7 @@ resources:
       <<: *repo-source
       paths:
         - package.json
+
 jobs:
   - name: Install dependencies
     plan: 
