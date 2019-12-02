@@ -3,3 +3,15 @@ resource_types:
   - name: npm-cache
     type: docker-image
     source: { respository: ymedlop/npm-cache-resource, tag: latest }
+resources:
+  - name: hello_hapi
+    type: git
+    source: &repo-source
+      uri: https://github.com/joeyrbrown/hello_hapi
+      branch: master
+  - name: dependency-cache
+    type: npm-cache
+    source:
+      <<: *repo-source
+      paths:
+        - package.json
