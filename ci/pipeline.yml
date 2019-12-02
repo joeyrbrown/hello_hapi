@@ -7,7 +7,7 @@ resource_types:
 
 resources:
   # a perfectly normal source repository with alot of dependencies
-  - name: repo
+  - name: hapi
     type: git
     source:
       &repo-source # apply a YAML anchor so we can refer to this in the cache resource
@@ -25,7 +25,7 @@ resources:
 jobs:
   - name: cache
     plan:
-      - get: repo
+      - get: hapi
         trigger: true
 
       - get: npm-repo-cache
@@ -40,4 +40,4 @@ jobs:
         passed: [cache]
 
       - task: Test Suite
-        file: repo/ci/tasks/run_tests.yml
+        file: hapi/ci/tasks/run_tests.yml
