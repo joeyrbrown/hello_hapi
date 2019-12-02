@@ -1,34 +1,43 @@
 ---
 resource_types:
+  # the npm-cache resource type
   - name: npm-cache
     type: docker-image
-    source: {respository: ymedlop/npm-cache-resource, tag: latest}
+    source: { repository: ymedlop/npm-cache-resource, tag: latest }
 
 resources:
-  - name: hello_hapi
+  # a perfectly normal source repository with alot of dependencies
+  - name: repo
     type: git
-    source: &repo-source
-      uri: https://github.com/joeyrbrown/hello_hapi
-      branch: master
-  - name: dependency-cache
-    type: npm-cache
     source:
-      <<: *repo-source
-      paths:
+      &repo-source # apply a YAML anchor so we can refer to this in the cache resource
+      uri: https://github.com/joeyrbrown/hello_hapi.git
+      branch: master
+
+  # a resource caching the dependencies listed in the source repository
+  - name: npm-repo-cache
+    type: npm-cache # as defined above
+    source:
+      <<: *repo-source # the source is the same as the corresponding git resource ...
+      paths: # ... except that it's only interested in files listing dependencies
         - package.json
 
 jobs:
-  - name: Install dependencies
-    plan: 
-      - get: hello_hapi
-        trigger: true
-      - get: dependency-cache
-  - name: Run tests
+  - name: cache
     plan:
-      - get: hello_hapi
+      - get: repo
         trigger: true
-        passed: [Install dependencies]
-      - get: dependency-cache
-        passed: [Install dependencies]
-      - task: run the test suite
-        file: hello_hapi/ci/tasks/run_tests.yml    
+
+      - get: npm-repo-cache
+
+  - name: Tests
+    plan:
+      - get: repo
+        trigger: true
+        passed: [cache]
+
+      - get: npm-repo-cache
+        passed: [cache]
+
+      - task: Test Suite
+        file: hello_hapi/ci/tasks/run_tests.yml
